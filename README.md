@@ -17,3 +17,4 @@ confrontational, motivational movement app against CL (corona lethargy)
 2. Change directory to /src-cordova (command: cd src-cordova) and issue in terminal: npm install
 
 To run your code in emulator, issue: npm run serve
+test y

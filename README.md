@@ -1,6 +1,6 @@
-# AppIt9x (appit9x)
+# conRun
 
-Template for your android app
+confrontational, motivational movement app against CL (corona lethargy)
 
 ## Guide for Windows 
 (unfortunately, I cannot offer guides for unix based systems)

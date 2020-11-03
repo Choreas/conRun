@@ -6,7 +6,7 @@ confrontational, motivational movement app against CL (corona lethargy)
 (unfortunately, I cannot offer guides for unix based systems)
 
 ## Prerequisites:
-1. Install Android Studio
+1. Install Android Studio. Make sure you are using the newest available stable version (above 4)
 2. Once Android Studio is running, navigate to SDK Manager and install (at least) Android SDK 28. Install any other versions you like (e.g. 30)
 3. Install npm package manager (best way is by installing node.js)
 4. Install cordova globally: npm install -g cordova

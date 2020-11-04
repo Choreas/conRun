@@ -6,7 +6,7 @@
       :todos="todos"
       :meta="meta"
     ></example-component>
-    <q-btn label="To y-index" @click="toyindex()"/> 
+    
   </q-page>
 </template>
 
@@ -14,15 +14,15 @@
 import { Todo, Meta } from 'components/models';
 import ExampleComponent from 'components/CompositionComponent.vue';
 import { defineComponent, ref } from '@vue/composition-api';
+import Router from 'src/router/index.ts';
 
 export default defineComponent({
   name: 'PageIndex',
   components: { ExampleComponent },
+  props: {},
   setup(props, {root}) {
-    function toyindex(): void {
+   
 
-      root.$router.push("y-index")
-    }
     const todos = ref<Todo[]>([
       {
         id: 1,

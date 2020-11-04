@@ -15,7 +15,7 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo" />
       </q-toolbar>
     </q-header>
 
@@ -42,6 +42,9 @@
 
     <q-page-container>
       <router-view />
+      <q-dialog v-model="showInfo" auto-close>
+        <app-info />
+      </q-dialog>
     </q-page-container>
   </q-layout>
 </template>
@@ -95,15 +98,20 @@ const linksData = [
 ];
 
 import { defineComponent, ref } from '@vue/composition-api';
+import AppInfo from 'pages/AppInfo.vue';
 
 export default defineComponent({
   name: 'MainLayout',
-  components: { EssentialLink },
+  components: { 
+    EssentialLink,
+    AppInfo
+  },
   setup() {
     const leftDrawerOpen = ref(false);
     const essentialLinks = ref(linksData);
+    const showInfo = ref(false);
 
-    return {leftDrawerOpen, essentialLinks}
+    return {leftDrawerOpen, essentialLinks, showInfo}
   }
 });
 </script>

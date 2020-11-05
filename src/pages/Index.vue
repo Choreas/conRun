@@ -18,7 +18,11 @@ import { defineComponent, ref } from '@vue/composition-api';
 export default defineComponent({
   name: 'PageIndex',
   components: { ExampleComponent },
-  setup() {
+  setup({root}) {
+
+    function click(): void {
+      root.$router.push('')
+    }
     const todos = ref<Todo[]>([
       {
         id: 1,
@@ -44,7 +48,7 @@ export default defineComponent({
     const meta = ref<Meta>({
       totalCount: 1200
     });
-    return { todos, meta };
+    return { todos, meta, click};
   }
 });
 </script>

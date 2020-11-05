@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api';
-import * as version from 'src/resources/manufacturerDetail.json'
+import * as version from 'src/resources/manufacturerDetail.json';
 
 export default defineComponent( {
 name:           'AppInfo',
@@ -53,7 +53,7 @@ setup() {
         color: #264897;
     }
     .info-detail {
-        text-align: left;
+        text-align: right;
         font-size: 20px;
         font-weight: bold;
         color: black;

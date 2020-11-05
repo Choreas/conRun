@@ -6,7 +6,7 @@
   "author": "Choreas <niklas.kosanke@web.de>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.ts,.vue ./",
+    "lint": "eslint --ext .ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
     "serve": "tsc --build tsconfig.json && quasar dev -m android --ide"
   },

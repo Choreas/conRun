@@ -6,6 +6,7 @@
       :todos="todos"
       :meta="meta"
     ></example-component>
+    <q-btn label="next page" v-on="click" />
   </q-page>
 </template>
 

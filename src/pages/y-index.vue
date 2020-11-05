@@ -6,26 +6,24 @@
       :todos="todos"
       :meta="meta"
     ></example-component>
-    <q-btn label="To y-index" @click="toyindex"/> 
+    
   </q-page>
 </template>
 
 <script lang="ts">
+/* yun test */
 import { Todo, Meta } from 'components/models';
 import ExampleComponent from 'components/CompositionComponent.vue';
 import { defineComponent, ref } from '@vue/composition-api';
-import { METHODS } from 'http';
+import Router from 'src/router/index.ts';
 
 export default defineComponent({
   name: 'PageIndex',
   components: { ExampleComponent },
+  props: {},
   setup(props, {root}) {
-    
-    function toyindex(): void {
-      root.$router.push("y-index")
-    }
-    
-    
+   
+
     const todos = ref<Todo[]>([
       {
         id: 1,
@@ -51,7 +49,7 @@ export default defineComponent({
     const meta = ref<Meta>({
       totalCount: 1200
     });
-    return { todos, meta, toyindex};
+    return { todos, meta };
   }
 });
 </script>

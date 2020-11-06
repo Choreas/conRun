@@ -6,8 +6,8 @@
       :todos="todos"
       :meta="meta"
     ></example-component>
-    <q-btn label="next page" v-on:click="click" />
-    <q-btn label="To y-index" @click="toyindex"/> 
+    <q-btn rounded  color=primary label="next page" v-on:click="click"/>
+    <q-btn rounded color=primary label="To y-index" @click="toyindex"/> 
   </q-page>
 </template>
 
@@ -24,14 +24,12 @@ export default defineComponent({
   setup(props, {root}) {
 
     function click(): void {
-      // root.$router.push('')
-      console.log('hallo')
+      root.$router.push('DinsPage')
     }
     
     function toyindex(): void {
       root.$router.push("y-index")
     }
-    
     
     const todos = ref<Todo[]>([
       {

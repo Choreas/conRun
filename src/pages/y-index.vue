@@ -1,12 +1,45 @@
 <template>
   <q-page class="row items-center justify-evenly">
     <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
+      title=""
+      active  
     ></example-component>
-    
+
+<div class="q-pa-md">
+    <q-carousel
+      v-model="slide"
+      transition-prev="slide-right"
+      transition-next="slide-left"
+      animated
+      control-color="primary"
+      class="rounded-borders"
+    >
+      <q-carousel-slide name="style" class="column no-wrap flex-center">
+        <q-icon name="settings" color="primary" size="56px" />
+        <div class="q-mt-md text-center">
+          {{ Motivtext }}
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="tv" class="column no-wrap flex-center">
+        <q-icon name="directions_run" color="primary" size="56px" />
+        <div class="q-mt-md text-center">
+          {{ Motivtext }}
+        </div>
+      </q-carousel-slide>
+    </q-carousel>
+
+    <div class="row justify-center">
+      <q-btn-toggle
+        glossy
+        v-model="slide"
+        :options="[
+          { label: 1, value: 'style' },
+          { label: 2, value: 'tv' },
+        ]"
+      />
+    </div>
+  </div>
+
   </q-page>
 </template>
 
@@ -21,35 +54,17 @@ export default defineComponent({
   name: 'PageIndex',
   components: { ExampleComponent },
   props: {},
+
+  data () {
+    return {
+      slide: 'style',
+      Motivtext: 'Social distancing, self-quarantining, and the closure of many gyms have made it harder to exercise. This App will help you stay active and motivated!'
+    }
+  },
+
   setup(props, {root}) {
    
-
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
-    });
-    return { todos, meta };
+    return { };
   }
 });
 </script>

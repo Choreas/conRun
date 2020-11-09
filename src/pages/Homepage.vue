@@ -1,7 +1,10 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <q-btn rounded  color=primary label="next page" v-on:click="click"/>
-    <q-btn rounded color=primary label="To y-index" @click="toyindex"/> 
+    <div class="buttons">
+      <q-btn class="runbtn" rounded icon="directions_run" size="50px" @click="runbtn"/>
+      <q-btn class="walkbtn" rounded icon="directions_walk" size="50px" @click="walkbtn"/>
+      <q-btn class="bikebtn" rounded icon="directions_bike" size="50px" @click="bikebtn"/>
+    </div>
   </q-page>
 </template>
 
@@ -12,18 +15,55 @@ import { defineComponent, ref } from '@vue/composition-api';
 import { METHODS } from 'http';
 
 export default defineComponent({
-  name: 'PageIndex',
+  name: 'Homepage',
   components: { ExampleComponent },
 
   setup(props, {root}) {
 
-    function click(): void {
-      root.$router.push('DinsPage')
+    function runbtn(): void {
+      root.$router.push('Homepage')
     }
-      
 
+    function walkbtn(): void {
+      root.$router.push('Homepage')
+    }
+
+    function bikebtn(): void {
+      root.$router.push('Homepage')
+    }
+  
     return {};
 
   }
 });
 </script>
+
+<style>
+
+  .runbtn{
+    background-color: #E898A8;
+    color: #E4032E;
+    height: 160px;
+    width: 350px;
+    display: block;
+  }
+
+   .walkbtn{
+    background-color: #8DB5DE;
+    color: #004F9F;
+    height: 160px;
+    width: 350px;
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+.bikebtn{
+    background-color: #85D1A2;
+    color: #00983A;
+    height: 160px;
+    width: 350px;
+    display: block;
+  }
+
+</style>

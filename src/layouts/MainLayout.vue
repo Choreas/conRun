@@ -2,9 +2,19 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
+        <!-- <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="leftDrawerOpen = !leftDrawerOpen"
+        /> -->
+
+        <!--set timer -->
 
         <q-toolbar-title>
-          conRun
+          <p id="clock" style="text-align: left; vertical-align: middle"></p>
         </q-toolbar-title>
 
         <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo" />
@@ -23,16 +33,24 @@
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api';
 import AppInfo from 'pages/AppInfo.vue';
+import { date } from 'quasar';
 
 export default defineComponent({
   name: 'MainLayout',
-  components: { 
-    AppInfo
+  components: {
+    AppInfo,
   },
   setup() {
     const showInfo = ref(false);
 
-    return {showInfo}
-  }
+    setInterval(() => {
+      let timeStamp = Date.now();
+      let formattedString = date.formatDate(timeStamp, 'HH:mm:ss');
+      var clock = document.getElementById('clock')!;
+      clock.innerHTML = formattedString;
+    }, 1000);
+
+    return { showInfo };
+  },
 });
 </script>

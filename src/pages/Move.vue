@@ -15,22 +15,10 @@ import { defineComponent, ref } from '@vue/composition-api';
 import { METHODS } from 'http';
 
 export default defineComponent({
-  name: 'Homepage',
+  name: 'Move',
   components: { ExampleComponent },
 
   setup(props, {root}) {
-
-    function runbtn(): void {
-      root.$router.push('Homepage')
-    }
-
-    function walkbtn(): void {
-      root.$router.push('Homepage')
-    }
-
-    function bikebtn(): void {
-      root.$router.push('Homepage')
-    }
   
     return {};
 

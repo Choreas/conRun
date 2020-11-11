@@ -14,12 +14,25 @@
         <!--set timer -->
 
         <q-toolbar-title>
-          <p id="clock" style="text-align: left; vertical-align: middle"></p>
+          <p id="clock" style="text-align: left; height: 100%; margin: 10px;"></p>
         </q-toolbar-title>
 
         <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo" />
       </q-toolbar>
     </q-header>
+
+    <q-footer>
+      <div id="action" class="actionBar">
+        <q-btn class="actionIcon" icon="fas fa-heartbeat" @click="toMove" />
+      </div>
+      <div id="statistic" class="statisticBar">
+        <q-btn
+          class="statisticIcon"
+          icon="fas fa-chart-line"
+          @click="toStatistic"
+        />
+      </div>
+    </q-footer>
 
     <q-page-container>
       <router-view />
@@ -40,7 +53,7 @@ export default defineComponent({
   components: {
     AppInfo,
   },
-  setup() {
+  setup(props, { root }) {
     const showInfo = ref(false);
 
     setInterval(() => {
@@ -50,7 +63,29 @@ export default defineComponent({
       clock.innerHTML = formattedString;
     }, 1000);
 
-    return { showInfo };
+    function toMove(): void {
+      root.$router.push('Move');
+    }
+
+    function toStatistic(): void {
+      root.$router.push('Statistic');
+    }
+    return { showInfo, toMove, toStatistic };
   },
 });
 </script>
+
+<style>
+.actionBar,
+.statisticBar {
+  display: inline-block;
+  width: 50%;
+  height: 60px;
+}
+.actionIcon, .statisticIcon{
+  width: 100%;
+  height: 100%;
+
+}
+
+</style>

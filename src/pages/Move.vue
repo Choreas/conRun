@@ -28,7 +28,6 @@ export default defineComponent({
 </script>
 
 <style>
-
   .buttons{
     height: 280px;
     width: 350px;
@@ -46,7 +45,7 @@ export default defineComponent({
     display: block;
   }
 
-  .walkbtn{
+   .walkbtn{
     background-color: #8DB5DE;
     color: #004F9F;
     height: 160px;
@@ -63,5 +62,4 @@ export default defineComponent({
     width: 350px;
     display: block;
   }
-
 </style>

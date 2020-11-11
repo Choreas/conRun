@@ -5,8 +5,7 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Homepage.vue') },
-      {path: '', component: () => import('pages/Statistic.vue') },
+      {path: 'statistics', component: () => import('pages/Statistic.vue') },
       {path: '', component: () => import('pages/Move.vue') },
     ]
   },

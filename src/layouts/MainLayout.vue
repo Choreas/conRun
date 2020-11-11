@@ -64,11 +64,11 @@ export default defineComponent({
     }, 1000);
 
     function toMove(): void {
-      root.$router.push('Move');
+      root.$router.push('/');
     }
 
     function toStatistic(): void {
-      root.$router.push('Statistic');
+      root.$router.push('statistics');
     }
     return { showInfo, toMove, toStatistic };
   },

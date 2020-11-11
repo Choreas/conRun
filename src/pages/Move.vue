@@ -27,7 +27,6 @@ export default defineComponent({
 </script>
 
 <style>
-
   .runbtn{
     background-color: #E898A8;
     color: #E4032E;
@@ -53,5 +52,4 @@ export default defineComponent({
     width: 350px;
     display: block;
   }
-
 </style>

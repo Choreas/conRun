@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-center justify-evenly">
+  <q-page>
     <div class="runcontainer">
       <q-icon class="runicon" name="directions_run" size="85px"/>
       <q-icon class="timericon" name="timer" size="85px"/>
@@ -16,7 +16,7 @@ import { defineComponent} from '@vue/composition-api';
 
 
 export default defineComponent({
-  name: 'Homepage',
+  name: 'Move',
   components: {},
 
   setup(props, {root}) {
@@ -30,49 +30,50 @@ export default defineComponent({
 
 <style>
   .runcontainer{
-    height: 300px;
-    width: 350px;
+    height: 43vh;
+    width: 90%;
     background-color: #E898A8;
-    border-radius: 30px;
-    margin: 0 auto;
-    position: absolute;
-    top: 67px;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 13%;
+    position: relative;
+    margin-bottom: 5%;
 
   }
 
   .runicon{
-    position: absolute;
-    left: 132px;
-    top: 37px;
+    height: 20vh;
+    width: 100%;
     color: #E4032E;
   }
 
-  .timericon{ 
-    position: absolute;
-    top: 170px;
-    left: 20px;
+  .timericon{
     color: #E4032E;
+    margin-left: 10%;
+    margin-top: 10%;
   }
 
   .pausebtn{ 
     background-color:#E898A8;
-    position: absolute;
     color: white;
-    top: 380px;
-    left: 20px;
-    height: 140px;
-    width: 168px;
-    border-radius: 30px;
+    height: 20vh;
+    width: 40%;
+    border-radius: 20%;
+    margin: 3.5%;
+
   }
 
   .finishbtn{ 
     background-color:#E898A8;
-    position: absolute;
     color: white;
-    top: 380px;
-    left: 203px;
-    height: 140px;
-    width: 168px;
-    border-radius: 30px;
+    height: 20vh;
+    width: 40%;
+    border-radius: 20%;
+    margin: 3.5%
+
+  }
+
+  .runbuttons{
+  text-align: center;
   }
 </style>

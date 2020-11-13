@@ -38,7 +38,6 @@ export default defineComponent({
     margin-top: 13%;
     position: relative;
     margin-bottom: 5%;
-
   }
 
   .runicon{

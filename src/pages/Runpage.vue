@@ -16,7 +16,7 @@ import { defineComponent} from '@vue/composition-api';
 
 
 export default defineComponent({
-  name: 'Move',
+  name: 'runPage',
   components: {},
 
   setup(props, {root}) {

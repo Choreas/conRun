@@ -1,11 +1,11 @@
 <template>
   <q-page>
     <div class="runcontainer">
-      <q-icon class="runicon" name="directions_run" size="85px"/>
+      <q-icon class="runicon" :name="getIcon()" size="85px"/>
       <q-icon class="timericon" name="timer" size="85px"/>
     </div>
     <div class="runbuttons">
-      <q-btn class="pausebtn" rounded icon="fas fa-pause" size="50px"/>
+      <q-btn class="pausebtn" rounded icon="fas fa-pause" size="50px" @click="test()"/>
       <q-btn class="finishbtn" rounded icon="fas fa-flag-checkered" size="50px"/>
     </div>
   </q-page>
@@ -17,12 +17,33 @@ import { defineComponent} from '@vue/composition-api';
 
 export default defineComponent({
   name: 'runPage',
+  props: {
+    activity: String,
+  },
   components: {},
 
   setup(props, {root}) {
+    function test(): void {
+      console.log(props.activity);
+    }
+
+    function getIcon(): string | undefined {
+      switch (props.activity) {
+        case 'run': {
+          return 'directions_run';
+        }
+        case 'walk': {
+          return 'directions_walk';
+        }
+        case 'cycle': {
+          return 'directions_bike';
+        }
+      }
+      return undefined;
+    }
     
     
-    return {};
+    return {test, getIcon};
 
   }
 });

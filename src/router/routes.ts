@@ -6,7 +6,7 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Move.vue') },
-      { path: 'runPage', component: () => import('pages/runPage.vue') }
+      { path: 'runPage', component: () => import('pages/runPage.vue'), props: true, name: 'runPage' }
     ]
   },
 

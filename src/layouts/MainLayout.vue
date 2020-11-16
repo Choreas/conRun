@@ -14,7 +14,10 @@
         <!--set timer -->
 
         <q-toolbar-title>
-          <p id="clock" style="text-align: left; height: 100%; margin: 10px;"></p>
+          <p
+            id="clock"
+            style="text-align: left; height: 100%; margin: 10px"
+          ></p>
         </q-toolbar-title>
 
         <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo" />
@@ -22,7 +25,7 @@
     </q-header>
 
     <q-footer>
-      <div id="action" class="actionBar">
+      <!-- <div id="action" class="actionBar">
         <q-btn class="actionIcon" icon="fas fa-heartbeat" @click="toMove" />
       </div>
       <div id="statistic" class="statisticBar">
@@ -31,10 +34,19 @@
           icon="fas fa-chart-line"
           @click="toStatistic"
         />
-      </div>
+      </div> -->
+      <q-tabs v-model="tab" inline-label outside-arrows mobile-arrows>
+        <q-route-tab
+          name="move"
+          icon="fas fa-heartbeat"
+          to="/"
+        />
+        <q-route-tab name="statistics" icon="fas fa-chart-line" to="/statistics" />
+      </q-tabs>
     </q-footer>
 
     <q-page-container>
+      
       <router-view />
       <q-dialog v-model="showInfo" auto-close>
         <app-info />
@@ -47,14 +59,19 @@
 import { defineComponent, ref } from '@vue/composition-api';
 import AppInfo from 'pages/AppInfo.vue';
 import { date } from 'quasar';
+import Move from 'pages/Move.vue';
+import Statistics from 'pages/Statistics.vue';
 
 export default defineComponent({
   name: 'MainLayout',
   components: {
     AppInfo,
+    Move,
+    Statistics,
   },
   setup(props, { root }) {
     const showInfo = ref(false);
+    const tab = ref('statistics');
 
     setInterval(() => {
       let timeStamp = Date.now();
@@ -70,7 +87,7 @@ export default defineComponent({
     function toStatistic(): void {
       root.$router.push('statistics');
     }
-    return { showInfo, toMove, toStatistic };
+    return { showInfo, toMove, toStatistic, tab };
   },
 });
 </script>
@@ -82,10 +99,9 @@ export default defineComponent({
   width: 50%;
   height: 60px;
 }
-.actionIcon, .statisticIcon{
+.actionIcon,
+.statisticIcon {
   width: 100%;
   height: 100%;
-
 }
-
 </style>

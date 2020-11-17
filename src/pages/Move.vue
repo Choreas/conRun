@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent} from '@vue/composition-api';
+import {defineComponent} from '@vue/composition-api';
 
 export default defineComponent({
   name: 'Move',
@@ -16,7 +16,7 @@ export default defineComponent({
   setup(props, {root}) {
 
     function openActivityScreen(activityName: string): void {
-      root.$router.push({name: 'runPage', params: {activity: activityName}});
+      root.$router.push({name: 'activityPage', params: {activity: activityName}});
     }
     
     return {openActivityScreen};

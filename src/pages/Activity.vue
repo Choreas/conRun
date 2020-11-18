@@ -1,8 +1,8 @@
 <template>
   <q-page>
     <div class="activityContainer" :style="getBgColor()">
-      <q-icon class="activityIcon" :name="getIcon()" :style="getIconStyle()" size="85px"/>
-      <q-icon class="timerIcon" :style="getIconStyle()" name="timer" size="85px"/>
+      <q-icon class="activityIcon" :name="getIcon()" :style="getIconColor()" size="85px"/>
+      <q-icon class="timerIcon" :style="getIconColor()" name="timer" size="85px"/>
     </div>
     <div class="runbuttons">
       <q-btn class="pausebtn" :style="getBgColor()" rounded icon="fas fa-pause" size="50px" @click="test()"/>
@@ -18,7 +18,7 @@ import {colors} from 'quasar';
 
 
 export default defineComponent({
-  name: 'activityPage',
+  name: 'Activity',
   props: {
     activity: String,
   },
@@ -44,7 +44,7 @@ export default defineComponent({
       return undefined;
     }
 
-    function getIconStyle(): object | undefined {
+    function getIconColor(): object | undefined {
       const iconStyle = {color:''};
         
       switch (props.activity) {
@@ -90,7 +90,7 @@ export default defineComponent({
       return bgColor;
     }
 
-    return {test, getIcon, getIconStyle, getBgColor};
+    return {test, getIcon, getIconColor, getBgColor};
 
   }
 });

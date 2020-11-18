@@ -15,7 +15,9 @@
         </q-card-section>
 
         <q-card-section align="center">
-          01:25:50:11 <br> Your Distance: 6503 m
+          01:25:50:11 
+          <br> 
+          Your Distance: 6503 m
         </q-card-section>
 
         <q-card-actions align="right">

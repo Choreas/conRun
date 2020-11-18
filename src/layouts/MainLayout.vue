@@ -2,12 +2,11 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-
         <q-toolbar-title>
           conRun
         </q-toolbar-title>
 
-        <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo" />
+        <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo"/>
       </q-toolbar>
     </q-header>
 
@@ -21,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api';
+import {defineComponent, ref } from '@vue/composition-api';
 import AppInfo from 'pages/AppInfo.vue';
 
 export default defineComponent({

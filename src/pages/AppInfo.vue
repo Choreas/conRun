@@ -1,5 +1,5 @@
 <template>
-    <q-card class="dialog" style="min-width: 50%">
+    <q-card class="dialog" style="min-width: 80%">
         <q-toolbar >
             <q-toolbar-title class="dialog-title">App-Info</q-toolbar-title>
         </q-toolbar>
@@ -28,7 +28,7 @@ components:     {},
 setup() {
     const versionInfo = computed( () => {
         const infoArray: {name: string, detail: string}[] = [];
-        infoArray.push({name: 'App-Bezeichnung', detail: version.productName});
+        infoArray.push({name: 'App-Bez.', detail: version.productName});
         infoArray.push({name: 'Version', detail: version.versionNumber});
         infoArray.push({name: 'Versionsname', detail: version.versionName});
         infoArray.push({name: 'Hersteller', detail: version.manufacturerName});

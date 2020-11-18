@@ -42,15 +42,11 @@
 import { defineComponent, ref } from '@vue/composition-api';
 import AppInfo from 'pages/AppInfo.vue';
 import { date } from 'quasar';
-import Move from 'pages/Move.vue';
-import Statistics from 'pages/Statistics.vue';
 
 export default defineComponent({
   name: 'MainLayout',
   components: {
     AppInfo,
-    Move,
-    Statistics,
   },
   setup(props, { root }) {
     const showInfo = ref(false);
@@ -63,14 +59,7 @@ export default defineComponent({
       clock.innerHTML = formattedString;
     }, 1000);
 
-    function toMove(): void {
-      root.$router.push('/');
-    }
-
-    function toStatistic(): void {
-      root.$router.push('statistics');
-    }
-    return { showInfo, toMove, toStatistic, tab };
+    return { showInfo, tab };
   },
 });
 </script>

@@ -2,17 +2,6 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <!-- <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        /> -->
-
-        <!--set timer -->
-
         <q-toolbar-title>
           <p
             id="clock"
@@ -23,35 +12,27 @@
         <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo" />
       </q-toolbar>
     </q-header>
+    <q-page-container>
+      <router-view />
+        <q-dialog v-model="showInfo" auto-close>
+          <app-info />
+      </q-dialog>
+    </q-page-container>
 
     <q-footer>
-      <!-- <div id="action" class="actionBar">
-        <q-btn class="actionIcon" icon="fas fa-heartbeat" @click="toMove" />
-      </div>
-      <div id="statistic" class="statisticBar">
-        <q-btn
-          class="statisticIcon"
-          icon="fas fa-chart-line"
-          @click="toStatistic"
-        />
-      </div> -->
       <q-tabs v-model="tab" inline-label outside-arrows mobile-arrows>
+        <q-route-tab name="move" icon="fas fa-heartbeat" to="/" :disable="this.$route.path == '/runPage'" />
         <q-route-tab
-          name="move"
-          icon="fas fa-heartbeat"
-          to="/"
+          name="statistics"
+          icon="fas fa-chart-line"
+          to="/statistics"
+          :disable="this.$route.path == '/runPage'
+          "
         />
-        <q-route-tab name="statistics" icon="fas fa-chart-line" to="/statistics" />
       </q-tabs>
     </q-footer>
 
-    <q-page-container>
-      
-      <router-view />
-      <q-dialog v-model="showInfo" auto-close>
-        <app-info />
-      </q-dialog>
-    </q-page-container>
+    
   </q-layout>
 </template>
 

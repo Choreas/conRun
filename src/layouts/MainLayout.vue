@@ -14,25 +14,27 @@
     </q-header>
     <q-page-container>
       <router-view />
-        <q-dialog v-model="showInfo" auto-close>
-          <app-info />
+      <q-dialog v-model="showInfo" auto-close>
+        <app-info />
       </q-dialog>
     </q-page-container>
 
     <q-footer>
       <q-tabs v-model="tab" inline-label outside-arrows mobile-arrows>
-        <q-route-tab name="move" icon="fas fa-heartbeat" to="/" :disable="this.$route.path == '/runPage'" />
+        <q-route-tab
+          name="move"
+          icon="fas fa-heartbeat"
+          to="/"
+          :disable="this.$route.path == '/Activity'"
+        />
         <q-route-tab
           name="statistics"
           icon="fas fa-chart-line"
           to="/statistics"
-          :disable="this.$route.path == '/runPage'
-          "
+          :disable="this.$route.path == '/Activity'"
         />
       </q-tabs>
     </q-footer>
-
-    
   </q-layout>
 </template>
 

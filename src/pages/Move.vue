@@ -1,13 +1,13 @@
 <template>
   <q-page class="maindiv">
-    <q-btn class="runbtn" rounded icon="directions_run" size="50px" @click="runbtn"/>
-    <q-btn class="walkbtn" rounded icon="directions_walk" size="50px"/>
-    <q-btn class="bikebtn" rounded icon="directions_bike" size="50px"/>
+    <q-btn class="runbtn" rounded icon="directions_run" size="50px" @click="openActivityScreen('run')"/>
+    <q-btn class="walkbtn" rounded icon="directions_walk" size="50px" @click="openActivityScreen('walk')"/>
+    <q-btn class="bikebtn" rounded icon="directions_bike" size="50px" @click="openActivityScreen('cycle')"/>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent} from '@vue/composition-api';
+import {defineComponent} from '@vue/composition-api';
 
 export default defineComponent({
   name: 'Move',
@@ -15,11 +15,11 @@ export default defineComponent({
 
   setup(props, {root}) {
 
-    function runbtn(): void {
-      root.$router.push('runPage')
+    function openActivityScreen(activityName: string): void {
+      root.$router.push({name: 'Activity', params: {activity: activityName}});
     }
     
-    return {runbtn};
+    return {openActivityScreen};
 
   }
 });

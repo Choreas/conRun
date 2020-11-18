@@ -5,16 +5,14 @@
       <q-icon class="timerIcon" :style="getIconColor()" name="timer" size="85px"/>
     </div>
     <div class="runbuttons">
-      <q-btn class="pausebtn" :style="getBgColor()" rounded icon="fas fa-pause" size="50px" @click="test()"/>
+      <q-btn class="pausebtn" :style="getBgColor()" rounded icon="fas fa-pause" size="50px"/>
       <q-btn class="finishbtn" :style="getBgColor()" rounded icon="fas fa-flag-checkered" size="50px"/>
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from '@vue/composition-api';
-import {METHODS} from 'http';
-import {colors} from 'quasar';
+import {defineComponent} from '@vue/composition-api';
 
 
 export default defineComponent({
@@ -25,10 +23,6 @@ export default defineComponent({
   components: {},
 
   setup(props, {root}) {
-    function test(): void {
-      console.log(props.activity);
-    }
-
     function getIcon(): string | undefined {
       switch (props.activity) {
         case 'run': {
@@ -44,7 +38,7 @@ export default defineComponent({
       return undefined;
     }
 
-    function getIconColor(): object | undefined {
+    function getIconColor(): object {
       const iconStyle = {color:''};
         
       switch (props.activity) {
@@ -67,7 +61,7 @@ export default defineComponent({
       return iconStyle;
     }
 
-    function getBgColor(): object | undefined {
+    function getBgColor(): object {
       const bgColor = {background:''};
         
       switch (props.activity) {
@@ -90,7 +84,7 @@ export default defineComponent({
       return bgColor;
     }
 
-    return {test, getIcon, getIconColor, getBgColor};
+    return {getIcon, getIconColor, getBgColor};
 
   }
 });

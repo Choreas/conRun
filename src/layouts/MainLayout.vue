@@ -9,7 +9,7 @@
           ></p>
         </q-toolbar-title>
 
-        <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo" />
+        <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo"/>
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api';
+import {defineComponent, ref } from '@vue/composition-api';
 import AppInfo from 'pages/AppInfo.vue';
 import { date } from 'quasar';
 

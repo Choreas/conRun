@@ -6,14 +6,30 @@
     </div>
     <div class="runbuttons">
       <q-btn class="pausebtn" :style="getBgColor()" rounded icon="fas fa-pause" size="50px"/>
-      <q-btn class="finishbtn" :style="getBgColor()" rounded icon="fas fa-flag-checkered" size="50px"/>
+      <q-btn class="finishbtn" :style="getBgColor()" rounded icon="fas fa-flag-checkered" size="50px" @click="finishbtn = true"/>
     </div>
+    <q-dialog v-model="finishbtn" persistent transition-show="flip-down" transition-hide="flip-up">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Congratulations!</div>
+        </q-card-section>
+
+        <q-card-section align="center">
+          01:25:50:11 
+          <br> 
+          Your Distance: 6503 m
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-
 
 export default defineComponent({
   name: 'Activity',
@@ -21,6 +37,12 @@ export default defineComponent({
     activity: String,
   },
   components: {},
+  
+  data () {
+    return {
+      finishbtn: false, 
+    }
+  },
 
   setup(props, {root}) {
     function getIcon(): string | undefined {

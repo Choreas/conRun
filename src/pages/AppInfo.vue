@@ -14,6 +14,7 @@
                 <br>
                 <br>
             </div>
+            <q-btn label="testGeo" @click="testGeo()" />
         </q-card-section>
         <q-btn label="testDB" @click="openDB()" />
     </q-card>
@@ -23,6 +24,7 @@
 import { computed, defineComponent } from '@vue/composition-api';
 import * as version from 'src/resources/manufacturerDetail.json';
 import dbHandler from 'src/helpers/dbHandler';
+import geoHandler from 'src/helpers/locationHandler';
 
 export default defineComponent( {
 name:           'AppInfo',
@@ -32,6 +34,9 @@ setup() {
         dbHandler.openTest();
     }
 
+    function testGeo(): void {
+        geoHandler.testGeo();
+    }
     const versionInfo = computed( () => {
         const infoArray: {name: string, detail: string}[] = [];
         infoArray.push({name: 'App-Bez.', detail: version.productName});
@@ -42,7 +47,8 @@ setup() {
     } );
     return {
         versionInfo,
-        openDB
+        openDB,
+        testGeo
     };
 }
 });

@@ -15,17 +15,23 @@
                 <br>
             </div>
         </q-card-section>
+        <q-btn label="testDB" @click="openDB()" />
     </q-card>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api';
 import * as version from 'src/resources/manufacturerDetail.json';
+import dbHandler from 'src/helpers/dbHandler';
 
 export default defineComponent( {
 name:           'AppInfo',
 components:     {},
 setup() {
+    function openDB(): void {
+        dbHandler.openTest();
+    }
+
     const versionInfo = computed( () => {
         const infoArray: {name: string, detail: string}[] = [];
         infoArray.push({name: 'App-Bez.', detail: version.productName});
@@ -36,6 +42,7 @@ setup() {
     } );
     return {
         versionInfo,
+        openDB
     };
 }
 });

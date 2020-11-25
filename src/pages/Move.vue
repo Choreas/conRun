@@ -37,7 +37,7 @@ export default defineComponent({
     color: #E4032E;
     height: 20vh;
     width: 100%;
-    margin-top: 15%;
+    margin-top: 13%;
   }
 
    .walkbtn{
@@ -45,7 +45,7 @@ export default defineComponent({
     color: #004F9F;
     height: 20vh;
     width: 100%;
-    margin-top: 15%;
+    margin-top: 13%;
   }
 
   .bikebtn{
@@ -53,6 +53,6 @@ export default defineComponent({
     color: #00983A;
     height: 20vh;
     width: 100%;
-    margin-top: 15%;
+    margin-top: 13%;
   }
 </style>

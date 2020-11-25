@@ -8,6 +8,7 @@ export interface ITrackResult {
   end: moment.Moment;
   durationMilliseconds: number;
   distance: number;
+  activity: ActivityType;
 }
 
 interface ITrackData {
@@ -40,7 +41,7 @@ export namespace track {
   }
 
   export function finishTracking(): ITrackResult {
-    if (ongoingTrackData.watchId === undefined || ongoingTrackData.start === undefined) throw new Error('No tracking in progress!');
+    if (ongoingTrackData.watchId === undefined || ongoingTrackData.start === undefined || ongoingTrackData.activity === undefined) throw new Error('No tracking in progress!');
     if (!locationHandler.stopWatching(ongoingTrackData.watchId)) throw new Error('No tracking in progress!');
 
     ongoingTrackData.watchId = undefined;
@@ -54,7 +55,8 @@ export namespace track {
         distance,
         durationMilliseconds: duration,
         end: endTimestamp,
-        start: ongoingTrackData.start
+        start: ongoingTrackData.start,
+        activity: ongoingTrackData.activity
       }
     } finally {
       clearTrackData();
@@ -63,7 +65,7 @@ export namespace track {
 
   function buildDistance(waypoints: Position[]): number {
     console.log('=== buildDistance ===');
-    
+
     if (waypoints.length < 2) throw new Error('Needs at least two waypoints!');
     const sortedWaypoints = _.cloneDeep(waypoints).sort( (a: Position, b: Position) => {
       return a.timestamp - b.timestamp;

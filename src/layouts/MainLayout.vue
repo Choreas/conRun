@@ -6,7 +6,7 @@
           <p
             id="clock"
             style="text-align: left; height: 100%; margin: 10px"
-          ></p>
+          />
         </q-toolbar-title>
 
         <q-btn icon="fa fa-info-circle" @click="showInfo = !showInfo"/>

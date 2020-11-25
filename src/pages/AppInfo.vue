@@ -17,6 +17,8 @@
             <q-btn label="testGeo" @click="testGeo()" />
         </q-card-section>
         <q-btn label="testDB" @click="openDB()" />
+        <q-btn label="startTracking" @click="startTracking()" />
+        <q-btn label="stopTracking" @click="stopTracking()" />
     </q-card>
 </template>
 
@@ -25,6 +27,7 @@ import { computed, defineComponent } from '@vue/composition-api';
 import * as version from 'src/resources/manufacturerDetail.json';
 import dbHandler from 'src/helpers/dbHandler';
 import geoHandler from 'src/helpers/locationHandler';
+import {track} from 'src/helpers/track'
 
 export default defineComponent( {
 name:           'AppInfo',
@@ -37,6 +40,16 @@ setup() {
     function testGeo(): void {
         geoHandler.testGeo();
     }
+
+    function startTracking(): void {
+        track.startTracking('walk');
+        console.log('STARTED TRACKING');
+    }
+
+    function stopTracking(): void {
+        console.log('FINISH: ', JSON.stringify(track.finishTracking()));
+    }
+
     const versionInfo = computed( () => {
         const infoArray: {name: string, detail: string}[] = [];
         infoArray.push({name: 'App-Bez.', detail: version.productName});
@@ -48,7 +61,9 @@ setup() {
     return {
         versionInfo,
         openDB,
-        testGeo
+        testGeo,
+        startTracking,
+        stopTracking
     };
 }
 });

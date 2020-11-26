@@ -27,17 +27,19 @@ export namespace track {
   }
 
   function onTrackingError(positionError: PositionError): void {
-    console.log('TRACKING ERROR: ', JSON.stringify(positionError));
-    clearTrackData();
+    console.log('TRACKING ERROR: ', positionError.message);
   }
 
-  export function startTracking(activity: ActivityType): void {
+  export function startTracking(activity: ActivityType): {startMoment: number, distanceCallback: () => number} {
     // throw error if there already is an ogoing tracking
     if (ongoingTrackData.watchId !== undefined) throw new Error('Tried to start tracking while another tracking process was already active!');
     ongoingTrackData.activity = activity;
     // get current timestamp
     ongoingTrackData.start = moment.default();
     ongoingTrackData.watchId = locationHandler.watchPosition(successfulTrackingInterval, onTrackingError);
+    return {startMoment: ongoingTrackData.start.valueOf(), distanceCallback: () => {
+      return buildDistance(ongoingTrackData.waypoints);
+    }};
   }
 
   export function finishTracking(): ITrackResult {

@@ -19,7 +19,7 @@
 
     <q-chart
       identifier="myChart"
-      style="height: 30vh; width: 100%; margin: 15% 0% 0% 0%"
+      style="height: 30vh; width: 100%; margin: 10% 0% 0% 0%"
       type="bar"
       :datasets="datasets"
       :labels="labels"

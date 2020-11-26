@@ -35,7 +35,7 @@
         icon="fas fa-caret-left"
         size="35px"
       />
-
+        <input type="week" name="week" id="camp-week" min="2020-W01" max="2020-W53" required/>
       <q-btn
         class="next"
         flat

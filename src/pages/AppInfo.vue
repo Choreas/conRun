@@ -14,11 +14,9 @@
                 <br>
                 <br>
             </div>
-            <q-btn label="testGeo" @click="testGeo()" />
+            <q-btn label="resetDB" @click="resetDB()" />
+            <q-btn label="getTrackingRecord" @click="getRec()" />
         </q-card-section>
-        <q-btn label="testDB" @click="openDB()" />
-        <q-btn label="startTracking" @click="startTracking()" />
-        <q-btn label="stopTracking" @click="stopTracking()" />
     </q-card>
 </template>
 
@@ -27,27 +25,22 @@ import { computed, defineComponent } from '@vue/composition-api';
 import * as version from 'src/resources/manufacturerDetail.json';
 import dbHandler from 'src/helpers/dbHandler';
 import geoHandler from 'src/helpers/locationHandler';
-import {track} from 'src/helpers/track'
+import dbDataHandler from 'src/helpers/dbDataHandler';
+import {track} from 'src/helpers/track';
+import moment from 'moment';
 
 export default defineComponent( {
 name:           'AppInfo',
 components:     {},
 setup() {
-    function openDB(): void {
-        dbHandler.openTest();
+    async function resetDB(): Promise<void> {
+        await dbHandler.initDatabase();
+        console.log('Database was reset completely!');
     }
 
-    function testGeo(): void {
-        geoHandler.testGeo();
-    }
-
-    function startTracking(): void {
-        track.startTracking('walk');
-        console.log('STARTED TRACKING');
-    }
-
-    function stopTracking(): void {
-        console.log('FINISH: ', JSON.stringify(track.finishTracking()));
+    async function getRec(): Promise<void> {
+        const data = await dbDataHandler.getTracking();
+        console.log(JSON.stringify(data));
     }
 
     const versionInfo = computed( () => {
@@ -60,10 +53,8 @@ setup() {
     } );
     return {
         versionInfo,
-        openDB,
-        testGeo,
-        startTracking,
-        stopTracking
+        resetDB,
+        getRec
     };
 }
 });

@@ -11,52 +11,109 @@
       <q-icon name="directions_bike" size="25px" color="green"/>
     </div>
 
-    <div class="naviDate">
-      <q-btn class="return" flat round color="primary" icon="fas fa-caret-left" size="35px"/>
-      Week Date
-      <q-btn class="next" flat round color="primary" icon="fas fa-caret-right" size="35px"/>
-    </div>
-
     <q-chart 
       identifier="myChart"
-      stilo="height:30vh; width: 100%"
+      style="height:30vh; width: 100%; margin: 15% 0% 0% 0%"
       type="bar"
       :datasets="datasets"
-      
+      :labels="labels"
+      :options="options"
     />
+
+    <div class="naviDate">
+      <q-btn class="return" flat round color="primary" icon="fas fa-caret-left" size="35px"/>
+      
+      <q-btn class="next" flat round color="primary" icon="fas fa-caret-right" size="35px"/>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api';
 import QChart from 'quasar-components-chart';
+import { ITrackResult } from 'src/helpers/track';
+import moment from 'moment';
+import { ActivityType } from 'src/helpers/interfaces';
+
+interface ITrackingRecord {
+  startTimestamp: number;
+  endTimestamp: number;
+  activity: ActivityType;
+  distance: number;
+}
+
+interface IDataSet{
+  label: string;
+  data: number[];
+  backgroundColor: string;
+  barPercentage: number;
+  barThickness: number;
+  maxBarThickness: number;
+  minBarLength: number;
+}
 
 export default defineComponent({
   name: 'Statistics',
   components: { QChart },
   setup() {
-    const datasets = [{
-        barPercentage: 0.5,
-        barThickness: 6,
-        maxBarThickness: 8,
-        minBarLength: 2,
-        data: [10, 20, 30, 40, 50, 60, 70]
-    }]
+    const testData: ITrackingRecord[] = []
+    testData.push({startTimestamp: moment().valueOf(), endTimestamp: moment().valueOf(), distance: 30, activity: 'walk'})
+    const labels = ['23', '24', '25', '26', '27', '28', '29'];
+    function generateDatasets(): IDataSet[]{
+      
+    }
+    const datasets= [{
+      label: 'Run',
+      data: [30, 45, 30, 40, 50, 20, 40],
+      backgroundColor: '#E4032E',
+      barPercentage: 0.5,
+      barThickness: 6,
+      maxBarThickness: 8,
+      minBarLength: 2},
+
+      {label: 'Walk',
+      data: [55, 30, 40, 50, 30, 45, 35],
+      backgroundColor: '#004F9F',
+      barPercentage: 0.5,
+      barThickness: 6,
+      maxBarThickness: 8,
+      minBarLength: 2},
+
+      {label: 'Bike',
+      data: [35, 50, 35, 55, 30, 35, 55],
+      backgroundColor: '#00983A',
+      barPercentage: 0.5,
+      barThickness: 6,
+      maxBarThickness: 8,
+      minBarLength: 2,
+    }];
+
+    const options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+            }
+        }]
+      }
+    }
+
     return {
       model: null,
       options: [
         'Tag', 'Woche', 'Monat'
       ],
-      datasets
+      datasets, labels
     }
   }
+
 });
 </script>
 
 <style>
 .naviDate{ 
   text-align: center;
-  margin-top: 85%;
+  margin-top: 20%;
 }
 .statIcons{ 
   margin-left: 5%;

@@ -11,10 +11,6 @@ export interface IFilter {
 }
 
 let db = window.sqlitePlugin.openDatabase(config.db);
-if (localStorage.getItem('dbCreated') !== 'true') {
-  _initStruct();
-  localStorage.setItem('dbCreated', 'true');
-}
 
 export interface ISqliteTable {
   name: string; 
@@ -34,6 +30,10 @@ function _openDatabase(): void {
     console.log('DB', JSON.stringify(db));
 
     if (!db) db = window.sqlitePlugin.openDatabase(config.db);
+    if (localStorage.getItem('dbCreated') === null) {
+      _initStruct();
+      localStorage.setItem('dbCreated', 'true');
+    }
   } catch (err) {
     console.log('ERROR: openDatabase', err);
     throw err;
@@ -128,9 +128,13 @@ function _sqlExecCommand(command: any): any {
 async function _initStruct() {
   console.log("restDB: initstruct begin");
 
-  // open database
-  _openDatabase();
-  console.log("restDB: initStruct DB is open");
+  try {
+    if (!db) db = window.sqlitePlugin.openDatabase(config.db);
+  } catch (err) {
+    console.log('ERROR: openDatabase', err);
+    throw err;
+  }
+
   let cmd = [];
 
   // run for each table in list
@@ -146,11 +150,9 @@ async function _initStruct() {
 }
 
 export default {
-  openTest(): void {
-    _openDatabase();
-  },
-
   async insert(table: keyof typeof tableStructure, data: any) {
+    // open database
+    _openDatabase();
     let command = _genCreate(table, data); // get sql command for insert
     console.log("CMD-INSERT", command);
     
@@ -193,5 +195,4 @@ export default {
   async initDatabase(): Promise<void> {
     _initStruct();
   }
-  
 }

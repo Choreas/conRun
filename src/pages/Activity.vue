@@ -14,7 +14,6 @@
       </div>
     </div>
     <div class="runbuttons">
-      <q-btn class="pausebtn" :style="getBgColor()" rounded icon="fas fa-pause" size="50px"/>
       <q-btn class="finishbtn" :style="getBgColor()" rounded icon="fas fa-flag-checkered" size="50px" @click="finish()"/>
     </div>
     <q-dialog v-model="finishbtn" persistent transition-show="flip-down" transition-hide="flip-up">
@@ -200,11 +199,11 @@ export default defineComponent({
   .activityContainer{
     height: 43vh;
     width: 90%;
-    border-radius: 20%;
+    border-radius: 5%;
     margin: auto;
     margin-top: 13%;
     position: relative;
-    margin-bottom: 5%;
+    margin-bottom: 1%;
   } 
 
   .activityIcon{
@@ -219,9 +218,9 @@ export default defineComponent({
   .pausebtn, .finishbtn{ 
     color: white;
     height: 20vh;
-    width: 40%;
-    border-radius: 20%;
-    margin: 4.5%;
+    width: 90%;
+    border-radius: 5%;
+    margin: 1.5%;
   }
 
   .runbuttons{

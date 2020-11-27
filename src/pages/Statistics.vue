@@ -1,15 +1,5 @@
 <template>
-  <div>
-    <div class="q-pa-md" style="max-width: 35%">
-      <q-select
-        color="blue"
-        bg-color="gray"
-        filled
-        v-model="model"
-        :options="options"
-      />
-    </div>
-
+  <div style="margin-top: 5%">
     <div class="statIcons">
       <q-icon name="fas fa-flag-checkered" size="25px" color="grey" /><br />
       <q-icon name="directions_run" size="25px" color="red" /><br />
@@ -22,7 +12,7 @@
       identifier="chart"
       style="height: 30vh; width: 100%; margin: 10% 0% 0% 0%"
       type="bar"
-      :datasets="datasets"
+      :datasets="generateDatasets()"
       :labels="labels"
       :options="options"
     />
@@ -51,20 +41,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api';
+import { computed, defineComponent, onMounted, Ref, ref } from '@vue/composition-api';
 import QChart from 'quasar-components-chart';
 import { ITrackResult } from 'src/helpers/track';
 import moment from 'moment';
 import { ActivityType } from 'src/helpers/interfaces';
 import ActivityVue from './Activity.vue';
 import { Loading } from 'quasar';
-
-interface ITrackingRecord {
-  startTimestamp: number;
-  endTimestamp: number;
-  activity: ActivityType;
-  distance: number;
-}
+import dbDataHandler, { ITrackingRecord } from 'src/helpers/dbDataHandler';
+import { IFilter } from 'src/helpers/dbHandler';
 
 interface IDataSet {
   label: ActivityType;
@@ -80,8 +65,10 @@ export default defineComponent({
   name: 'Statistics',
   components: { QChart },
   setup(props, {root}) {
-    const chartRendered = ref(true);
+    moment.locale('de');
+    const chartRendered = ref(false);
     const weekInputValue = ref(`${moment().format('YYYY-')}W${moment().format('W')}`);
+    const trackingData: Ref<ITrackingRecord[]> = ref([]);
     const testData: ITrackingRecord[] = [];
     testData.push({
       startTimestamp: moment().valueOf(),
@@ -96,9 +83,10 @@ export default defineComponent({
       change();
     }
 
-    function change(): void {
+    async function change(): Promise<void> {
       chartRendered.value = false;
       Loading.show();
+      await loadData();
       setTimeout( () => {
         chartRendered.value = true;
         Loading.hide();
@@ -107,17 +95,15 @@ export default defineComponent({
 
     const labels = computed( () => {
       const result: string[] = []
-      const mondayOfWeek = moment(weekInputValue.value);
+      const mondayOfWeek = moment(weekInputValue.value).startOf('week');
       for (let i: number = 0; i < 7; i++) {
-        result.push(`${mondayOfWeek.add(1, 'day').format('DD')}`);
+        result.push(`${mondayOfWeek.clone().add(i, 'day').format('DD')}`);
       }
       return result;
     } );
 
-    function generateDatasets(
-      allTrackingRecord: ITrackingRecord[],
-      startDay: number
-    ): IDataSet[] {
+    function generateDatasets(): IDataSet[] {
+      const startDay: number = +(moment(weekInputValue.value).format('D'));
       const allDataSets: IDataSet[] = [];
       const walkDataSet: IDataSet = {
         label: 'walk',
@@ -147,32 +133,14 @@ export default defineComponent({
         minBarLength: 2,
       };
 
-      for (let trackingRecord of allTrackingRecord) {
-        if (
-          trackingRecord.activity == 'walk' &&
-          moment(trackingRecord.startTimestamp).days() >= startDay &&
-          moment(trackingRecord.startTimestamp).days() < startDay + 7
-        ) {
-          let i = moment(trackingRecord.startTimestamp).days() - startDay;
-          walkDataSet.data[i] += trackingRecord.distance;
-        }
-
-        if (
-          trackingRecord.activity == 'run' &&
-          moment(trackingRecord.startTimestamp).days() >= startDay &&
-          moment(trackingRecord.startTimestamp).days() < startDay + 7
-        ) {
-          let i = moment(trackingRecord.startTimestamp).days() - startDay;
-          runDataSet.data[i] += trackingRecord.distance;
-        }
-
-        if (
-          trackingRecord.activity == 'cycle' &&
-          moment(trackingRecord.startTimestamp).days() >= startDay &&
-          moment(trackingRecord.startTimestamp).days() < startDay + 7
-        ) {
-          let i = moment(trackingRecord.startTimestamp).days() - startDay;
-          bikeDataSet.data[i] += trackingRecord.distance;
+      for (let trackingRecord of trackingData.value) {
+        const chartDay = moment(trackingRecord.startTimestamp).weekday();
+        if (trackingRecord.activity == 'walk') {
+          walkDataSet.data[chartDay] += trackingRecord.distance;
+        } else if (trackingRecord.activity == 'run') {
+          runDataSet.data[chartDay] += trackingRecord.distance;
+        } else if (trackingRecord.activity == 'cycle') {
+          bikeDataSet.data[chartDay] += trackingRecord.distance;
         }
       }
       allDataSets.push(walkDataSet);
@@ -181,59 +149,51 @@ export default defineComponent({
       return allDataSets;
     }
 
-    const datasets = [
-      {
-        label: 'Run',
-        data: [30, 45, 30, 40, 50, 20, 40],
-        backgroundColor: '#E4032E',
-        barPercentage: 0.5,
-        barThickness: 6,
-        maxBarThickness: 8,
-        minBarLength: 2,
-      },
-
-      {
-        label: 'Walk',
-        data: [55, 30, 40, 50, 30, 45, 35],
-        backgroundColor: '#004F9F',
-        barPercentage: 0.5,
-        barThickness: 6,
-        maxBarThickness: 8,
-        minBarLength: 2,
-      },
-
-      {
-        label: 'Bike',
-        data: [35, 50, 35, 55, 30, 35, 55],
-        backgroundColor: '#00983A',
-        barPercentage: 0.5,
-        barThickness: 6,
-        maxBarThickness: 8,
-        minBarLength: 2,
-      },
-    ];
-
     const options = {
       scales: {
         yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
+          {   
+            beginAtZero: true,
           },
         ],
       },
     };
 
+    async function loadData(): Promise<void> {
+      const filters: IFilter[] = [{
+        field: 'startTimestamp',
+        comparison: '>=',
+        value: moment(weekInputValue.value).startOf('day').valueOf(),
+        numeric: true
+      },
+      {
+        field: 'startTimestamp',
+        comparison: '<=',
+        value: moment(weekInputValue.value).endOf('week').valueOf(),
+        numeric: true
+      }]
+      trackingData.value = await dbDataHandler.getTracking(filters);
+    }
+
+    onMounted( async () => {
+      Loading.show();
+      try {
+        await loadData();
+        chartRendered.value = true;
+      } finally {
+        Loading.hide();
+      }
+    } )
+
     return {
       model: null,
       options: ['Tag', 'Woche', 'Monat'],
-      datasets,
       labels,
       change,
       weekInputValue,
       chartRendered,
-      skipDate
+      skipDate,
+      generateDatasets
     };
   },
 });

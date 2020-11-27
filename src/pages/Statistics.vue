@@ -5,7 +5,7 @@
         <div class="col">
           <q-icon name="fas fa-flag-checkered" size="25px" color="grey" /><br />
         </div>
-        <div class="col">
+        <div class="col1">
           {{getTotalDistance('total')}}
         </div>
       </div>
@@ -13,7 +13,7 @@
         <div class="col">
           <q-icon name="directions_run" size="25px" color="red" /><br />
         </div>
-        <div class="col">
+        <div class="col1" style="color: red">
           {{getTotalDistance('run')}}
         </div>
       </div>
@@ -21,7 +21,7 @@
         <div class="col">
           <q-icon name="directions_walk" size="25px" color="blue" /><br />
         </div>
-        <div class="col">
+        <div class="col1" style="color: blue">
           {{getTotalDistance('walk')}}
         </div>
       </div>
@@ -29,7 +29,7 @@
         <div class="col">
           <q-icon name="directions_bike" size="25px" color="green" />
         </div>
-        <div class="col">
+        <div class="col1" style="color: green">
           {{getTotalDistance('cycle')}}
         </div>
       </div>
@@ -38,7 +38,7 @@
     <q-chart
       v-if="chartRendered"
       identifier="chart"
-      style="height: 30vh; width: 100%; margin: 10% 0% 0% 0%"
+      style="height: 30vh; width: 100%; margin: 15% 0% 0% 0%"
       type="bar"
       :datasets="generateDatasets()"
       :labels="labels"
@@ -52,9 +52,9 @@
         round
         color="primary"
         icon="fas fa-caret-left"
-        size="35px"
+        size="30px"
       />
-        <q-input v-model="weekInputValue" type="week" name="week" id="camp-week" style="min-width: 40%" required @change="change()" />
+        <q-input v-model="weekInputValue" type="week" name="week" id="camp-week" style="min-width: 30%" required @change="change()" />
       <q-btn
         class="next"
         @click="skipDate(1)"
@@ -62,7 +62,7 @@
         round
         color="primary"
         icon="fas fa-caret-right"
-        size="35px"
+        size="30px"
       />
     </div>
   </div>
@@ -242,13 +242,14 @@ export default defineComponent({
 
 <style>
 .naviDate {
-  text-align: center;
   max-width: 90%;
   margin-top: 20%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10%;
 }
 .statIcons {
   margin-left: 5%;
+}
+.col1 {
+  margin-right: 30%;
 }
 </style>

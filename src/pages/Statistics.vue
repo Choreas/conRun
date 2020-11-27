@@ -38,7 +38,7 @@
     <q-chart
       v-if="chartRendered"
       identifier="chart"
-      style="height: 30vh; width: 100%; margin: 20% 0% 0% 0%"
+      style="height: 30vh; width: 100%; margin: 15% 0% 0% 0%"
       type="bar"
       :datasets="generateDatasets()"
       :labels="labels"
@@ -250,6 +250,6 @@ export default defineComponent({
   margin-left: 5%;
 }
 .col1 {
-  margin-right: 65%;
+  margin-right: 30%;
 }
 </style>

@@ -1,10 +1,38 @@
 <template>
   <div style="margin-top: 5%">
     <div class="statIcons">
-      <q-icon name="fas fa-flag-checkered" size="25px" color="grey" /><br />
-      <q-icon name="directions_run" size="25px" color="red" /><br />
-      <q-icon name="directions_walk" size="25px" color="blue" /><br />
-      <q-icon name="directions_bike" size="25px" color="green" />
+      <div class="row">
+        <div class="col">
+          <q-icon name="fas fa-flag-checkered" size="25px" color="grey" /><br />
+        </div>
+        <div class="col">
+          {{getTotalDistance('total')}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <q-icon name="directions_run" size="25px" color="red" /><br />
+        </div>
+        <div class="col">
+          {{getTotalDistance('run')}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <q-icon name="directions_walk" size="25px" color="blue" /><br />
+        </div>
+        <div class="col">
+          {{getTotalDistance('walk')}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <q-icon name="directions_bike" size="25px" color="green" />
+        </div>
+        <div class="col">
+          {{getTotalDistance('cycle')}}
+        </div>
+      </div>
     </div>
 
     <q-chart
@@ -50,6 +78,7 @@ import ActivityVue from './Activity.vue';
 import { Loading } from 'quasar';
 import dbDataHandler, { ITrackingRecord } from 'src/helpers/dbDataHandler';
 import { IFilter } from 'src/helpers/dbHandler';
+import * as _ from 'lodash';
 
 interface IDataSet {
   label: ActivityType;
@@ -76,6 +105,17 @@ export default defineComponent({
       distance: 30,
       activity: 'walk',
     });
+
+    function getTotalDistance(activity: ActivityType | 'total'): string {
+      const activityArray: ITrackingRecord[] = activity !== 'total' ? _.cloneDeep(trackingData.value).filter( (value: ITrackingRecord) => {
+            return value.activity === activity;
+          } ) : _.cloneDeep(trackingData.value);
+      let result = 0;
+      activityArray.forEach( (value: ITrackingRecord) => {
+        result += value.distance;
+      } );
+      return `${result} m`;
+    }
 
     function skipDate(count: number): void {
       const newDate = moment(weekInputValue.value).add(count * 7, 'days');
@@ -193,7 +233,8 @@ export default defineComponent({
       weekInputValue,
       chartRendered,
       skipDate,
-      generateDatasets
+      generateDatasets,
+      getTotalDistance
     };
   },
 });

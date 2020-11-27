@@ -18,26 +18,28 @@
     </div>
 
     <q-chart
-      identifier="myChart"
+      v-if="chartRendered"
+      identifier="chart"
       style="height: 30vh; width: 100%; margin: 10% 0% 0% 0%"
       type="bar"
       :datasets="datasets"
       :labels="labels"
       :options="options"
     />
-
-    <div class="naviDate">
+    <div class="row naviDate">
       <q-btn
         class="return"
+        @click="skipDate(-1)"
         flat
         round
         color="primary"
         icon="fas fa-caret-left"
         size="35px"
       />
-        <input type="week" name="week" id="camp-week" min="2020-W01" max="2020-W53" required/>
+        <q-input v-model="weekInputValue" type="week" name="week" id="camp-week" style="min-width: 40%" required @change="change()" />
       <q-btn
         class="next"
+        @click="skipDate(1)"
         flat
         round
         color="primary"
@@ -49,12 +51,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { computed, defineComponent, ref } from '@vue/composition-api';
 import QChart from 'quasar-components-chart';
 import { ITrackResult } from 'src/helpers/track';
 import moment from 'moment';
 import { ActivityType } from 'src/helpers/interfaces';
 import ActivityVue from './Activity.vue';
+import { Loading } from 'quasar';
 
 interface ITrackingRecord {
   startTimestamp: number;
@@ -76,7 +79,9 @@ interface IDataSet {
 export default defineComponent({
   name: 'Statistics',
   components: { QChart },
-  setup() {
+  setup(props, {root}) {
+    const chartRendered = ref(true);
+    const weekInputValue = ref(`${moment().format('YYYY-')}W${moment().format('W')}`);
     const testData: ITrackingRecord[] = [];
     testData.push({
       startTimestamp: moment().valueOf(),
@@ -84,7 +89,30 @@ export default defineComponent({
       distance: 30,
       activity: 'walk',
     });
-    const labels = ['23', '24', '25', '26', '27', '28', '29'];
+
+    function skipDate(count: number): void {
+      const newDate = moment(weekInputValue.value).add(count * 7, 'days');
+      weekInputValue.value = `${newDate.format('YYYY-')}W${newDate.format('W')}`;
+      change();
+    }
+
+    function change(): void {
+      chartRendered.value = false;
+      Loading.show();
+      setTimeout( () => {
+        chartRendered.value = true;
+        Loading.hide();
+      }, 1000);
+    }
+
+    const labels = computed( () => {
+      const result: string[] = []
+      const mondayOfWeek = moment(weekInputValue.value);
+      for (let i: number = 0; i < 7; i++) {
+        result.push(`${mondayOfWeek.add(1, 'day').format('DD')}`);
+      }
+      return result;
+    } );
 
     function generateDatasets(
       allTrackingRecord: ITrackingRecord[],
@@ -202,6 +230,10 @@ export default defineComponent({
       options: ['Tag', 'Woche', 'Monat'],
       datasets,
       labels,
+      change,
+      weekInputValue,
+      chartRendered,
+      skipDate
     };
   },
 });
@@ -210,7 +242,10 @@ export default defineComponent({
 <style>
 .naviDate {
   text-align: center;
+  max-width: 90%;
   margin-top: 20%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .statIcons {
   margin-left: 5%;

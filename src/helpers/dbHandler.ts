@@ -128,9 +128,13 @@ function _sqlExecCommand(command: any): any {
 async function _initStruct() {
   console.log("restDB: initstruct begin");
 
-  // open database
-  _openDatabase();
-  console.log("restDB: initStruct DB is open");
+  try {
+    if (!db) db = window.sqlitePlugin.openDatabase(config.db);
+  } catch (err) {
+    console.log('ERROR: openDatabase', err);
+    throw err;
+  }
+
   let cmd = [];
 
   // run for each table in list

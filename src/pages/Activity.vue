@@ -228,7 +228,9 @@ export default defineComponent({
   }
 
   .timercontent {
-    margin: 10% 0% 0% 5%;
-    font-size: 19px;
+    margin: 5% 30% 0% 0%;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
   }
 </style>

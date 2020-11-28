@@ -84,7 +84,7 @@ export default defineComponent({
         finishbtn.value = true;
       } catch (e) {
         console.log('ERROR when trying to finish tracking. Message: ', e.message);
-        root.$router.push('/');
+        root.$router.replace('/');
       } finally {
         Loading.hide();
       }
@@ -95,7 +95,7 @@ export default defineComponent({
     }
 
     function routeToStatistics(): void {
-      root.$router.push('/statistics');
+      root.$router.replace('/statistics');
     }
 
     function getIcon(): string | undefined {

@@ -25,12 +25,14 @@
           name="move"
           icon="fas fa-heartbeat"
           to="/"
+          replace
           :disable="this.$route.path == '/Activity'"
         />
         <q-route-tab
           name="statistics"
           icon="fas fa-chart-line"
           to="/statistics"
+          replace
           :disable="this.$route.path == '/Activity'"
         />
       </q-tabs>

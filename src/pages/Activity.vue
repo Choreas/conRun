@@ -9,7 +9,7 @@
         <div class="col timercontent">
           {{elapsedTime}} 
           <br>
-          {{traveledDistance}} m
+          {{getBeautifiedDistance()}} m
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
         <q-card-section align="center">
           {{elapsedTime}}
           <br> 
-          Your Distance: {{traveledDistance}} m
+          Your Distance: {{getBeautifiedDistance()}} m
         </q-card-section>
 
         <q-card-actions align="right">
@@ -88,6 +88,10 @@ export default defineComponent({
       } finally {
         Loading.hide();
       }
+    }
+
+    function getBeautifiedDistance(): string {
+      return traveledDistance.value.toFixed(1);
     }
 
     function routeToStatistics(): void {
@@ -189,7 +193,17 @@ export default defineComponent({
       }
     } );
 
-    return {getIcon, getIconColor, getBgColor, elapsedTime, traveledDistance, finishbtn, finish, routeToStatistics};
+    return {
+      getIcon, 
+      getIconColor, 
+      getBgColor, 
+      elapsedTime, 
+      traveledDistance, 
+      finishbtn, 
+      finish, 
+      routeToStatistics, 
+      getBeautifiedDistance
+    };
 
   }
 });

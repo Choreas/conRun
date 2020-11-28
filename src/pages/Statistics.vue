@@ -114,7 +114,7 @@ export default defineComponent({
       activityArray.forEach( (value: ITrackingRecord) => {
         result += value.distance;
       } );
-      return `${result} m`;
+      return `${result.toFixed(1)} m`;
     }
 
     function skipDate(count: number): void {

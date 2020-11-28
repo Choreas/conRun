@@ -15,6 +15,7 @@
         text-color="blue"
         unelevated
         to="/"
+        replace
         label="Go Home"
         no-caps
       />

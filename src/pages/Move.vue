@@ -16,7 +16,7 @@ export default defineComponent({
   setup(props, {root}) {
 
     function openActivityScreen(activityName: string): void {
-      root.$router.push({name: 'Activity', params: {activity: activityName}});
+      root.$router.replace({name: 'Activity', params: {activity: activityName}});
     }
     
     return {openActivityScreen};

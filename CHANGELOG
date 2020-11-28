@@ -1,0 +1,16 @@
+v0.1.0 BASE
+  # Features
+    ## Track
+      - Select from three activities: run, walk, cycle
+      - View elapsed time and traveled distance during active Tracking
+      - Finish or abort Tracking
+      - Tracking starts after 10 seconds countdown during which tracking can be aborted
+      - Tracking works by watching device's position and summing consecutive position's distances calculated using haversine formula
+    ## Store
+      - Store results in sqlite database
+    ## Statistics
+      - View results per week on three colored bar chart
+      - Change week by direct selection or by switching one week per time
+      - View week's total distances grouped by activity
+    ## Version info
+      - Global info button to view app and manufacturer information

@@ -96,7 +96,7 @@ export default defineComponent({
   setup(props, {root}) {
     moment.locale('de');
     const chartRendered = ref(false);
-    const weekInputValue = ref(`${moment().format('YYYY-')}W${moment().format('W')}`);
+    const weekInputValue = ref(`${moment().format('YYYY-')}W${moment().format('WW')}`);
     const trackingData: Ref<ITrackingRecord[]> = ref([]);
     const testData: ITrackingRecord[] = [];
     testData.push({
@@ -114,16 +114,17 @@ export default defineComponent({
       activityArray.forEach( (value: ITrackingRecord) => {
         result += value.distance;
       } );
-      return `${result} m`;
+      return `${result.toFixed(1)} m`;
     }
 
     function skipDate(count: number): void {
       const newDate = moment(weekInputValue.value).add(count * 7, 'days');
-      weekInputValue.value = `${newDate.format('YYYY-')}W${newDate.format('W')}`;
+      weekInputValue.value = `${newDate.format('YYYY-')}W${newDate.format('WW')}`;
       change();
     }
 
     async function change(): Promise<void> {
+      if (!weekInputValue.value) weekInputValue.value = `${moment().format('YYYY-')}W${moment().format('WW')}`;
       chartRendered.value = false;
       Loading.show();
       await loadData();
@@ -200,6 +201,7 @@ export default defineComponent({
     };
 
     async function loadData(): Promise<void> {
+      console.log(weekInputValue.value);
       const filters: IFilter[] = [{
         field: 'startTimestamp',
         comparison: '>=',

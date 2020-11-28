@@ -96,7 +96,7 @@ export default defineComponent({
   setup(props, {root}) {
     moment.locale('de');
     const chartRendered = ref(false);
-    const weekInputValue = ref(`${moment().format('YYYY-')}W${moment().format('W')}`);
+    const weekInputValue = ref(`${moment().format('YYYY-')}W${moment().format('WW')}`);
     const trackingData: Ref<ITrackingRecord[]> = ref([]);
     const testData: ITrackingRecord[] = [];
     testData.push({
@@ -119,7 +119,7 @@ export default defineComponent({
 
     function skipDate(count: number): void {
       const newDate = moment(weekInputValue.value).add(count * 7, 'days');
-      weekInputValue.value = `${newDate.format('YYYY-')}W${newDate.format('W')}`;
+      weekInputValue.value = `${newDate.format('YYYY-')}W${newDate.format('WW')}`;
       change();
     }
 
@@ -200,6 +200,7 @@ export default defineComponent({
     };
 
     async function loadData(): Promise<void> {
+      console.log(weekInputValue.value);
       const filters: IFilter[] = [{
         field: 'startTimestamp',
         comparison: '>=',

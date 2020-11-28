@@ -124,6 +124,7 @@ export default defineComponent({
     }
 
     async function change(): Promise<void> {
+      if (!weekInputValue.value) weekInputValue.value = `${moment().format('YYYY-')}W${moment().format('WW')}`;
       chartRendered.value = false;
       Loading.show();
       await loadData();

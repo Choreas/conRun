@@ -52,7 +52,6 @@ import { Loading, Notify } from 'quasar';
 import dbDataHandler from 'src/helpers/dbDataHandler';
 import { track } from 'src/helpers/track';
 import { ActivityType } from '../helpers/interfaces';
-import CircularCountDownTimer from 'vue-circular-count-down-timer';
 
 export default defineComponent({
   name: 'Activity',

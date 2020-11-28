@@ -23,7 +23,7 @@ export namespace track {
 
   function successfulTrackingInterval(position: Position): void {
     console.log('waypoint - latitude: ', position.coords.latitude, 'longitude: ', position.coords.longitude);
-    ongoingTrackData.waypoints.push(position);
+    if (moment.default().diff(ongoingTrackData.start, "seconds") > 10) ongoingTrackData.waypoints.push(position);
   }
 
   function onTrackingError(positionError: PositionError): void {
@@ -40,6 +40,12 @@ export namespace track {
     return {startMoment: ongoingTrackData.start.valueOf(), distanceCallback: () => {
       return buildDistance(ongoingTrackData.waypoints);
     }};
+  }
+
+  export function abortTracking(): void {
+    if (ongoingTrackData.watchId === undefined) throw new Error('No tracking in progress!');
+    if (!locationHandler.stopWatching(ongoingTrackData.watchId)) throw new Error('No tracking in progress!');
+    clearTrackData();
   }
 
   export function finishTracking(): ITrackResult {

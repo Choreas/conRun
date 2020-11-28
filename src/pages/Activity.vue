@@ -1,5 +1,14 @@
 <template>
   <q-page>
+    <q-dialog :value="countdownCounter > -1" persistent transition-show="flip-down" transition-hide="flip-up" @click="abortCountdown()">
+      <q-circular-progress 
+        size="10rem"
+        reverse
+        :max="10"
+        :value="countdownCounter"
+        show-value
+      />
+    </q-dialog>
     <div class="activityContainer" :style="getBgColor()">
       <q-icon class="activityIcon" :name="getIcon()" :style="getIconColor()" size="85px"/>
       <div class="row">
@@ -39,10 +48,11 @@
 <script lang="ts">
 import {computed, defineComponent, onMounted, onUnmounted, ref} from '@vue/composition-api';
 import moment from 'moment';
-import { Loading } from 'quasar';
+import { Loading, Notify } from 'quasar';
 import dbDataHandler from 'src/helpers/dbDataHandler';
 import { track } from 'src/helpers/track';
 import { ActivityType } from '../helpers/interfaces';
+import CircularCountDownTimer from 'vue-circular-count-down-timer';
 
 export default defineComponent({
   name: 'Activity',
@@ -58,6 +68,7 @@ export default defineComponent({
     const currentTimestamp = ref(moment());
     const traveledDistance = ref(0);
     const finishbtn = ref(false);
+    const countdownCounter = ref(10);
 
     const elapsedTime = computed( () => {
       if (startTimestamp.value === 0) return "00:00:00 ''00";
@@ -68,6 +79,17 @@ export default defineComponent({
             milliSeconds = duration.milliseconds().toString().substring(0, 2);
       return `${hours.length === 1 ? '0' : ''}${hours}:${minutes.length === 1 ? '0' : ''}${minutes}:${seconds.length === 1 ? '0' : ''}${seconds} ''${milliSeconds.length === 1 ? '0' : ''}${milliSeconds}`;
     } );
+
+    function abortCountdown(): void {
+      try {
+        track.abortTracking();
+        clearIntervals();
+      } catch (e) {
+        console.log('Error during tracking abort')
+      } finally {
+        root.$router.replace('/');
+      }
+    }
 
     async function finish(): Promise<void> {
       Loading.show();
@@ -159,22 +181,33 @@ export default defineComponent({
       return bgColor;
     }
 
-    onMounted( () => {
-      document.addEventListener("backbutton", (e: any) => {
-        e.preventDefault();
-      }, true);
-
-      const trackingData = track.startTracking(props.activity as ActivityType);
-      distanceCallback = trackingData.distanceCallback;
-      startTimestamp.value = trackingData.startMoment;
-
+    function startTimer(): void {
+      startTimestamp.value = moment().valueOf();
       intervals.push(setInterval( () => {
         currentTimestamp.value = moment();
       }, 100 ));
+    }
 
+    function startDistanceCallbackInterval(): void {
       intervals.push(setInterval( () => {
         traveledDistance.value = distanceCallback();
       }, 8000 )); 
+    }
+
+    onMounted( () => {
+      const trackingData = track.startTracking(props.activity as ActivityType);
+      distanceCallback = trackingData.distanceCallback;
+
+      intervals.push(setInterval( () => {
+        console.log(countdownCounter.value);
+        if (countdownCounter.value > -1) countdownCounter.value -= 1;
+        else 
+        {
+          clearInterval(intervals.pop()!);
+          startTimer();
+          startDistanceCallbackInterval();
+        };
+      }, 1000 ));
     } );
 
     function clearIntervals(): void {
@@ -202,7 +235,9 @@ export default defineComponent({
       finishbtn, 
       finish, 
       routeToStatistics, 
-      getBeautifiedDistance
+      getBeautifiedDistance,
+      countdownCounter,
+      abortCountdown
     };
 
   }

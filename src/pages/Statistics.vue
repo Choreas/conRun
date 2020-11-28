@@ -131,7 +131,7 @@ export default defineComponent({
       setTimeout( () => {
         chartRendered.value = true;
         Loading.hide();
-      }, 1000);
+      }, 200);
     }
 
     const labels = computed( () => {

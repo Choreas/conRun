@@ -15,7 +15,6 @@
                 <br>
             </div>
             <q-btn label="resetDB" @click="resetDB()" />
-            <q-btn label="getTrackingRecord" @click="getRec()" />
         </q-card-section>
     </q-card>
 </template>
@@ -38,11 +37,6 @@ setup() {
         console.log('Database was reset completely!');
     }
 
-    async function getRec(): Promise<void> {
-        const data = await dbDataHandler.getTracking();
-        console.log(JSON.stringify(data));
-    }
-
     const versionInfo = computed( () => {
         const infoArray: {name: string, detail: string}[] = [];
         infoArray.push({name: 'App-Bez.', detail: version.productName});
@@ -54,7 +48,6 @@ setup() {
     return {
         versionInfo,
         resetDB,
-        getRec
     };
 }
 });

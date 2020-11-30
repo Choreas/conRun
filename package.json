@@ -1,9 +1,9 @@
 {
-  "name": "appit9x",
-  "version": "0.0.1",
-  "description": "Template for your android app",
-  "productName": "AppIt9x",
-  "author": "Choreas <niklas.kosanke@web.de>",
+  "name": "proj.yunadinik.conrun",
+  "version": "0.1.1",
+  "description": "Confrontational, motivational movement app against CL (corona lethargy)",
+  "productName": "conRun",
+  "author": "YuNadiNik <niklas.kosanke@web.de>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .ts,.vue ./",

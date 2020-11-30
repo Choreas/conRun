@@ -1,8 +1,8 @@
 {
   "name": "proj.yunadinik.conrun",
-  "displayName": "AppIt9x",
-  "version": "1.0.0",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "displayName": "conRun",
+  "version": "0.1.1",
+  "description": "Confrontational, motivational movement app against CL (corona lethargy)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -246,7 +246,7 @@ export default defineComponent({
 .naviDate {
   max-width: 90%;
   margin-top: 20%;
-  margin-left: 9%;
+  margin-left: 8%;
 }
 .statIcons {
   margin-left: 5%;

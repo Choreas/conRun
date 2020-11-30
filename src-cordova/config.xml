@@ -2,7 +2,7 @@
 <widget id="proj.yunadinik.conrun" version="0.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>conRun</name>
     <icon src="..\src\assets\conRunLogo.png" />
-    <description>Confrontational, motivational movement app against CL (corona lethargy)</description>
+    <description>Template for your android app</description>
     <author email="niklas.kosanke@web.de" href="https://github.com/Choreas/conRun">
        YuNadiNik
     </author>
